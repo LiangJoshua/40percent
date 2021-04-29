@@ -1,4 +1,4 @@
-package percent.percent;
+package com.forty_percent;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
