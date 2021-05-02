@@ -2,6 +2,11 @@ spring:
   config:
     activate:
       on-profile: staging
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
   datasource:
     url: jdbc:postgresql://ec2-23-22-191-232.compute-1.amazonaws.com/d5kogcije27pq3
     username: vobcopjcigcjxy
