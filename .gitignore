@@ -24,6 +24,7 @@ hs_err_pid*
 =======
 HELP.md
 .gradle
+.mvn
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
@@ -59,3 +60,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+.DS_Store
+target
+test-output

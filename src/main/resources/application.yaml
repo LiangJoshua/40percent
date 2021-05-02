@@ -1,0 +1,9 @@
+spring:
+  config:
+    activate:
+      on-profile: @activatedProperties@
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database: POSTGRESQL
+  datasource:
+    platform: postgres
