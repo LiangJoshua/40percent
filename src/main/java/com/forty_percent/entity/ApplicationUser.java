@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -27,8 +28,16 @@ import com.forty_percent.config.UserRole;
 @Entity
 @Table (indexes = { @Index (columnList = "username"), @Index(columnList = "email") })
 public class ApplicationUser implements UserDetails, Serializable{
+	@SequenceGenerator(
+			name = "application_user_sequence",
+			sequenceName = "application_user_sequence",
+			allocationSize = 1
+	)
 	@Id
-	@GeneratedValue (strategy= GenerationType.IDENTITY)
+	@GeneratedValue (
+			strategy = GenerationType.SEQUENCE,
+			generator = "application_user_sequence"
+	)
 	private Long id;
 	private String firstName;
 	private String lastName;

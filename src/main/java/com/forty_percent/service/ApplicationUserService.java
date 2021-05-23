@@ -1,9 +1,7 @@
 package com.forty_percent.service;
 
-import java.util.Arrays;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,21 +10,17 @@ import org.springframework.stereotype.Service;
 
 import com.forty_percent.config.UserRole;
 import com.forty_percent.entity.ApplicationUser;
+import com.forty_percent.exception.UserCreationException;
 import com.forty_percent.repository.ApplicationUserRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@AllArgsConstructor
 public class ApplicationUserService implements UserDetailsService {
 
 	private final ApplicationUserRepository applicationUserRepository;
 	private final PasswordEncoder passwordEncoder;
-
-	@Autowired
-	public ApplicationUserService(
-			@Qualifier("postgres") ApplicationUserRepository applicationUserRepository,
-			PasswordEncoder passwordEncoder){
-		this.applicationUserRepository = applicationUserRepository;
-		this.passwordEncoder = passwordEncoder;
-	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
@@ -35,14 +29,32 @@ public class ApplicationUserService implements UserDetailsService {
 				.orElseThrow(() -> new UsernameNotFoundException(String.format("Username %s not found.", username)));
 	}
 
-	public void register(String username, String password) {
+	public ApplicationUser signupUser(
+			String firstName,
+			String lastName,
+			String username,
+			String password,
+			List<UserRole> roles) throws UserCreationException{
+		if (applicationUserRepository.findByUsername(username).isPresent()) {
+			throw new UserCreationException(String.format("User with username/email %s already exists", username));
+		}
+
 		ApplicationUser applicationUser = new ApplicationUser();
 		applicationUser.setUsername(username);
+		applicationUser.setFirstName(firstName);
+		applicationUser.setLastName(lastName);
 		applicationUser.setPassword(passwordEncoder.encode(password));
-		applicationUser.setRoles(Arrays.asList(UserRole.USER));
+		applicationUser.setRoles(roles);
 		applicationUser.setAccountNonExpired(true);
 		applicationUser.setAccountNonLocked(true);
 		applicationUser.setCredentialsNonExpired(true);
+		applicationUser.setEnabled(false);
+		applicationUserRepository.save(applicationUser);
+
+		return applicationUser;
+	}
+
+	public void enableUser(ApplicationUser applicationUser) {
 		applicationUser.setEnabled(true);
 		applicationUserRepository.save(applicationUser);
 	}
