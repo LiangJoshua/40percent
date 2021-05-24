@@ -14,4 +14,7 @@ public interface ApplicationUserRepository extends JpaRepository<ApplicationUser
 
 	@Query("select u from ApplicationUser u where u.username = :username")
 	Optional<ApplicationUser> findByUsername(@Param("username") String username);
+
+	@Query("select u from ApplicationUser u where u.email = :email")
+	Optional<ApplicationUser> findByEmail(@Param("email") String email);
 }

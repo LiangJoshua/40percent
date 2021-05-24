@@ -29,6 +29,7 @@ public class RegistrationService{
 			ApplicationUser applicationUser = applicationUserService.signupUser(
 					registrationRequest.getFirstName(),
 					registrationRequest.getLastName(),
+					registrationRequest.getUsername(),
 					registrationRequest.getEmail(),
 					registrationRequest.getPassword(),
 					Arrays.asList(UserRole.USER));

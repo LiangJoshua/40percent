@@ -33,16 +33,22 @@ public class ApplicationUserService implements UserDetailsService {
 			String firstName,
 			String lastName,
 			String username,
+			String email,
 			String password,
 			List<UserRole> roles) throws UserCreationException{
 		if (applicationUserRepository.findByUsername(username).isPresent()) {
-			throw new UserCreationException(String.format("User with username/email %s already exists", username));
+			throw new UserCreationException(String.format("User with username %s already exists", username));
+		}
+
+		if (applicationUserRepository.findByEmail(email).isPresent()) {
+			throw new UserCreationException(String.format("User with email %s already exists", username));
 		}
 
 		ApplicationUser applicationUser = new ApplicationUser();
 		applicationUser.setUsername(username);
 		applicationUser.setFirstName(firstName);
 		applicationUser.setLastName(lastName);
+		applicationUser.setEmail(email);
 		applicationUser.setPassword(passwordEncoder.encode(password));
 		applicationUser.setRoles(roles);
 		applicationUser.setAccountNonExpired(true);
