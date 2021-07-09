@@ -28,11 +28,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		this.applicationUserService = applicationUserService;
 	}
 
-	@Override
+		@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http
 //				.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 //				.and()
+				.cors().and()
 				.csrf().disable()
 				.authorizeRequests()
 					.antMatchers("/", "index", "/register**", "/users/register", "/css/*", "/js/*").permitAll()
