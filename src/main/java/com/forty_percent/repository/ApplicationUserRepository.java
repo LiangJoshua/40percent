@@ -10,11 +10,11 @@ import org.springframework.stereotype.Repository;
 import com.forty_percent.entity.ApplicationUser;
 
 @Repository("postgres")
-public interface ApplicationUserRepository extends JpaRepository<ApplicationUser, Long>{
+public interface ApplicationUserRepository extends JpaRepository<ApplicationUser, Long> {
 
-	@Query("select u from ApplicationUser u where u.username = :username")
-	Optional<ApplicationUser> findByUsername(@Param("username") String username);
+    @Query("select u from ApplicationUser u where u.username = :username")
+    Optional<ApplicationUser> findByUsername(@Param("username") String username);
 
-	@Query("select u from ApplicationUser u where u.email = :email")
-	Optional<ApplicationUser> findByEmail(@Param("email") String email);
+    @Query("select u from ApplicationUser u where u.email = :email")
+    Optional<ApplicationUser> findByEmail(@Param("email") String email);
 }

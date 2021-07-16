@@ -20,29 +20,29 @@ import lombok.AllArgsConstructor;
 @RequestMapping("api/v1/registration")
 @AllArgsConstructor
 public class RegistrationController {
-	private final static Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(RegistrationController.class);
 
-	private final RegistrationService registrationService;
+    private final RegistrationService registrationService;
 
-	@PostMapping
-	public ResponseEntity<String> register(@RequestBody RegistrationRequest registrationRequest) {
-		try {
-			registrationService.register(registrationRequest);
-		} catch (UserRegistrationException e) {
-			LOGGER.error("Unable to register user {}", registrationRequest, e);
-			return ResponseEntity.badRequest().body("Unable to register user");
-		}
-		return ResponseEntity.ok("User registered");
-	}
+    @PostMapping
+    public ResponseEntity<String> register(@RequestBody RegistrationRequest registrationRequest) {
+        try {
+            registrationService.register(registrationRequest);
+        } catch (UserRegistrationException e) {
+            LOGGER.error("Unable to register user {}", registrationRequest, e);
+            return ResponseEntity.badRequest().body("Unable to register user");
+        }
+        return ResponseEntity.ok("User registered");
+    }
 
-	@GetMapping("confirm")
-	public ResponseEntity<String> confirm(@RequestParam ("token") String token) {
-		try {
-			registrationService.confirmToken(token);
-		} catch (UserRegistrationException e) {
-			LOGGER.error("Unable to confirm user registration with token {}", token, e);
-			return ResponseEntity.badRequest().body("Unable to confirm user registration");
-		}
-		return ResponseEntity.ok("User registration confirmed");
-	}
+    @GetMapping("confirm")
+    public ResponseEntity<String> confirm(@RequestParam("token") String token) {
+        try {
+            registrationService.confirmToken(token);
+        } catch (UserRegistrationException e) {
+            LOGGER.error("Unable to confirm user registration with token {}", token, e);
+            return ResponseEntity.badRequest().body("Unable to confirm user registration");
+        }
+        return ResponseEntity.ok("User registration confirmed");
+    }
 }

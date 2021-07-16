@@ -10,7 +10,7 @@ import lombok.AllArgsConstructor;
 @Controller
 @RequestMapping("/api/v1/users")
 @AllArgsConstructor
-public class ApplicationUserController{
+public class ApplicationUserController {
 
-	private final ApplicationUserService applicationUserService;
+    private final ApplicationUserService applicationUserService;
 }
