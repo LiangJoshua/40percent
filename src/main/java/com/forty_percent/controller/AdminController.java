@@ -5,6 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/admin/api/v1")
-public class AdminController{
+public class AdminController {
 
 }
